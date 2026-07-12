@@ -26,8 +26,12 @@ Root & Bloom is a premium restaurant website created for a farm-to-table dining 
 
 ## Live Demo
 
-Coming Soon
+https://root-bloom-indol.vercel.app
 
-## Author
+## 👨‍💻 Developed By
 
-Designed & Developed by MoosaWebCraft
+MoosaWebCraft
+
+Website: https://moosawebcraft.vercel.app/
+
+GitHub: https://github.com/moosawebcraft
