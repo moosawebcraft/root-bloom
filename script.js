@@ -1,8 +1,8 @@
 /* =========================================================
-   ROOT & BLOOM — Script v2
-   Navbar, vine progress, reveal, lightbox,
-   testimonial slider, floating-label validation,
-   accordion, back-to-top, page loader/transition.
+   ROOT & BLOOM — Script
+   Navbar, scrollspy, vine progress, reveal, hero parallax,
+   lightbox, testimonial slider, floating-label validation,
+   accordion-free FAQ removed, back-to-top, page loader.
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     vinePath.style.strokeDashoffset = `${vinePathLength - progress * vinePathLength}`;
   }
 
-  /* ---------- Hero parallax (subtle, container-level so it doesn't fight the CSS zoom) ---------- */
+  /* ---------- Hero parallax (container-level, doesn't fight the CSS zoom) ---------- */
   const heroMedia = document.getElementById('heroMedia');
   const heroSection = document.querySelector('.hero');
 
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onScroll();
 
   if (backToTop) {
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' }));
   }
 
   /* ---------- Scrollspy: highlight active nav link ---------- */
@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
           entry.target.classList.add('in-view');
           revealObserver.unobserve(entry.target);
 
-          // Trigger stat count-up once the philosophy stats reveal
           if (entry.target.classList.contains('stat')) {
             animateCount(entry.target.querySelector('[data-count]'));
           }
@@ -153,27 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(tick);
   }
-
-  /* ---------- Accordion (FAQ) ---------- */
-  const accordionTriggers = document.querySelectorAll('.accordion-trigger');
-
-  accordionTriggers.forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const panel = trigger.parentElement.nextElementSibling;
-      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-
-      accordionTriggers.forEach(t => {
-        if (t !== trigger) {
-          t.setAttribute('aria-expanded', 'false');
-          const p = t.parentElement.nextElementSibling;
-          if (p) p.style.maxHeight = null;
-        }
-      });
-
-      trigger.setAttribute('aria-expanded', String(!isOpen));
-      panel.style.maxHeight = isOpen ? null : `${panel.scrollHeight}px`;
-    });
-  });
 
   /* ---------- Lightbox gallery ---------- */
   const masonryItems = Array.from(document.querySelectorAll('.masonry-item'));
@@ -320,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const firstInvalid = reservationForm.querySelector('.form-group.invalid input, .form-group.invalid select, .form-group.invalid textarea');
         if (firstInvalid) firstInvalid.focus();
         if (formNote) {
-          formNote.style.color = '#C53030';
+          formNote.style.color = '#B3261E';
           formNote.textContent = 'Please check the highlighted fields.';
         }
         return;
@@ -339,20 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { if (formNote) formNote.textContent = ''; }, 6000);
     });
   }
-
-  /* ---------- Newsletter forms ---------- */
-  document.querySelectorAll('#newsletterForm, .newsletter-form-lg').forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = form.querySelector('input');
-      if (input) {
-        input.value = '';
-        const original = input.placeholder;
-        input.placeholder = 'Subscribed! 🌿';
-        setTimeout(() => { input.placeholder = original; }, 3000);
-      }
-    });
-  });
 
   /* ---------- Smooth scroll offset for fixed navbar ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
